@@ -1,13 +1,18 @@
 "use strict";
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const buttonScrollTo = document.querySelector(".btn--scroll-to");
+const navLinks = document.querySelector(".nav__links");
+const tabContainer = document.querySelector(".operations__tab-container");
+const tabs = document.querySelectorAll(".operations__tab");
+const contents = document.querySelectorAll(".operations__content");
+const nav = document.querySelector(".nav");
 
+///////////////////////////////////////
+// Modal window
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove("hidden");
@@ -30,30 +35,14 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// // Ceating and adding elements
-// const message = document.createElement("div");
-// message.classList.add("cookie-message");
-// message.innerHTML =
-//   'We use cookies for improved functionality and analytics <button class = "btn btn--close-cookie">Got it!<button>';
-
-// const header = document.querySelector(".header");
-// header.append(message);
-
-// document
-//   .querySelector(".btn--close-cookie")
-//   .addEventListener("click", function () {
-//     message.remove();
-//   });
-
 // Adding smooth scrolling to the 'learn more' button
-const buttonScrollTo = document.querySelector(".btn--scroll-to");
 buttonScrollTo.addEventListener("click", function (e) {
   e.preventDefault();
   document.querySelector("#section--1").scrollIntoView({ behavior: "smooth" });
 });
 
 // Adding smooth scrolling using event delegation to the nav bar links
-document.querySelector(".nav__links").addEventListener("click", function (e) {
+navLinks.addEventListener("click", function (e) {
   e.preventDefault();
   if (e.target.classList.contains("nav__link")) {
     const id = e.target.getAttribute("href");
@@ -62,15 +51,10 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
   }
 });
 
-// Code for the tabbed component.
-const tabContainer = document.querySelector(".operations__tab-container");
-const tabs = document.querySelectorAll(".operations__tab");
-const contents = document.querySelectorAll(".operations__content");
-
 /*
+Code for the tabbed component.
 We will use event delegation over here, attaching the event handler to the common parent of all the tabs ie the tabContainer and then finding the matching condition to handle the events.
 */
-
 tabContainer.addEventListener("click", function (e) {
   const clicked = e.target.closest(".operations__tab");
 
@@ -92,3 +76,39 @@ tabContainer.addEventListener("click", function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add("operations__content--active");
 });
+
+// Code for link hover in the navigation
+const handleHover = function (e) {
+  if (e.target.classList.contains("nav__link")) {
+    const link = e.target;
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector("img");
+
+    siblings.forEach((el) => {
+      if (el !== link) {
+        el.style.opacity = this;
+      }
+    });
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+nav.addEventListener("mouseout", handleHover.bind(1));
+
+// Code for sticky navigation
+
+// // Ceating and adding elements
+// const message = document.createElement("div");
+// message.classList.add("cookie-message");
+// message.innerHTML =
+//   'We use cookies for improved functionality and analytics <button class = "btn btn--close-cookie">Got it!<button>';
+
+// const header = document.querySelector(".header");
+// header.append(message);
+
+// document
+//   .querySelector(".btn--close-cookie")
+//   .addEventListener("click", function () {
+//     message.remove();
+//   });
