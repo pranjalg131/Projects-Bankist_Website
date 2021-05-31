@@ -20,7 +20,9 @@
 		"esbenp.prettier-vscode",
 		"xabikos.javascriptsnippets",
 		"ritwickdey.liveserver",
-		"tomoki1207.pdf"
+		"tomoki1207.pdf",
+		"naumovs.color-highlight",
+		"visualstudioexptteam.vscodeintellicode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

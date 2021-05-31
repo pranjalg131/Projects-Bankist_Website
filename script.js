@@ -61,3 +61,34 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   }
 });
+
+// Code for the tabbed component.
+const tabContainer = document.querySelector(".operations__tab-container");
+const tabs = document.querySelectorAll(".operations__tab");
+const contents = document.querySelectorAll(".operations__content");
+
+/*
+We will use event delegation over here, attaching the event handler to the common parent of all the tabs ie the tabContainer and then finding the matching condition to handle the events.
+*/
+
+tabContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab");
+
+  // Gaurd Check
+  if (!clicked) return;
+
+  // Removing active class from all tabs and contents
+  tabs.forEach((t) => {
+    t.classList.remove("operations__tab--active");
+  });
+  contents.forEach((c) => {
+    c.classList.remove("operations__content--active");
+  });
+
+  // Adding active class to the current tab
+  clicked.classList.add("operations__tab--active");
+  // For the content , take out the tab number from data attribute
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
