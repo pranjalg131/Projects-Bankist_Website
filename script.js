@@ -10,6 +10,7 @@ const tabContainer = document.querySelector(".operations__tab-container");
 const tabs = document.querySelectorAll(".operations__tab");
 const contents = document.querySelectorAll(".operations__content");
 const nav = document.querySelector(".nav");
+const header = document.querySelector(".header");
 
 ///////////////////////////////////////
 // Modal window
@@ -97,8 +98,31 @@ nav.addEventListener("mouseover", handleHover.bind(0.5));
 nav.addEventListener("mouseout", handleHover.bind(1));
 
 // Code for sticky navigation
+const navHeight = nav.getBoundingClientRect().height;
 
-// // Ceating and adding elements
+const handleSticky = function (entries) {
+  const [entry] = entries;
+  console.log(entry);
+  console.log(entry.isIntersecting);
+  if (!entry.isIntersecting) {
+    nav.classList.add("sticky");
+  } else {
+    nav.classList.remove("sticky");
+  }
+};
+
+const optns = {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+};
+
+const headerObserver = new IntersectionObserver(handleSticky, optns);
+headerObserver.observe(header);
+
+// TODO : Reveal elements on scroll
+
+//  Ceating and adding elements
 // const message = document.createElement("div");
 // message.classList.add("cookie-message");
 // message.innerHTML =
