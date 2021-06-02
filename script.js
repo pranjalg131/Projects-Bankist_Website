@@ -102,8 +102,6 @@ const navHeight = nav.getBoundingClientRect().height;
 
 const handleSticky = function (entries) {
   const [entry] = entries;
-  console.log(entry);
-  console.log(entry.isIntersecting);
   if (!entry.isIntersecting) {
     nav.classList.add("sticky");
   } else {
@@ -120,8 +118,31 @@ const optns = {
 const headerObserver = new IntersectionObserver(handleSticky, optns);
 headerObserver.observe(header);
 
-// TODO : Reveal elements on scroll
+const sections = document.querySelectorAll(".section");
 
+const showSections = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove("section--hidden");
+  // to avoid unnecessay logging of events and waste of resources
+  observer.unobserve(entry.target);
+};
+
+const sectionOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const observeSections = new IntersectionObserver(showSections, sectionOptions);
+sections.forEach((section) => {
+  observeSections.observe(section);
+  section.classList.add("section--hidden");
+});
+
+// TODO : Lazy Loading the images.
 //  Ceating and adding elements
 // const message = document.createElement("div");
 // message.classList.add("cookie-message");
