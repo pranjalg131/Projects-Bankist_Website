@@ -142,7 +142,31 @@ sections.forEach((section) => {
   section.classList.add("section--hidden");
 });
 
-// TODO : Lazy Loading the images.
+const lazyimgs = document.querySelectorAll("img[data-src]");
+
+const lazyLoadImage = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+
+  // To avoid removing the blur effect prematurely
+  entry.target.addEventListener("load", function () {
+    entry.target.classList.remove("lazy-img");
+  });
+};
+
+const lazyLoadOptns = {
+  root: null,
+  threshold: 0,
+  rootMargin: "200px", // to load them ahead of time to give the illusion of instant loading.
+};
+
+const imgObserver = new IntersectionObserver(lazyLoadImage, lazyLoadOptns);
+lazyimgs.forEach((img) => imgObserver.observe(img));
+
+// TODO : Building the slider component.
 //  Ceating and adding elements
 // const message = document.createElement("div");
 // message.classList.add("cookie-message");
